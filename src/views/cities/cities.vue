@@ -1,17 +1,17 @@
 <template>
   <div class="cities">
     <van-search 
-    v-model="value"  
+    v-model="searchValue"  
     placeholder="请输入搜索关键词"
     show-action
     @cancel="onCancel"
     shape="round"/>
     <van-tabs 
-    v-model:active="active"
+    v-model:active="tabActive"
     color="orange">
-      <van-tab title="国内·港澳台">内容 1</van-tab>
-      <van-tab title="海外">内容 2</van-tab>
-
+      <template v-for="(value,key,index) in allCities" :key="key">
+        <van-tab :title="value.title" >内容</van-tab>
+      </template>
     </van-tabs>
   </div>
 </template>
@@ -19,11 +19,19 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useCityStore } from '@/stores/modules/city';
+import { storeToRefs } from 'pinia';
   const router = useRouter()
-  const value= ref("")
+  const searchValue= ref("")
+  const tabActive = ref(0)
   const onCancel = ()=>{
     router.back()
   }
+
+  const cityStore = useCityStore()
+  cityStore.getAllCities()
+  const {allCities} = storeToRefs(cityStore) 
+  console.log(allCities)
 </script>
 
 <style lang="less" scoped>
