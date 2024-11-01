@@ -17,8 +17,8 @@
     </div>
 
     <div class="content">
-      <template v-for="oneScope in allScopes">
-        <list v-show="currentScope?.title === oneScope?.title" :scopeCities="currentScope?.cities"/>
+      <template v-for="(value, key, index) in allScopes">
+        <list v-show="tabActive === key" :scopeCities="value"/>
       </template>
       
     </div>
