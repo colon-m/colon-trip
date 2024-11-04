@@ -8,22 +8,33 @@
     <div class="clander">
       <div class="startTime">
         <p>开始时间</p>
-        <span>8月8</span>
+        <span>{{start.month()+1}}月{{ start.date() }}日</span>
       </div>
       <div class="endTime">
-        <span>共1晚</span>
+        <span>共{{ totalDays }}晚</span>
       </div>
       <div class="endTime">
         <p>结束时间</p>
-        <span>8月9</span>
+        <span>{{end.month()+1}}月{{end.date()}}日</span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import NavBar from './nav-bar/nav-bar.vue';
 import position from './position/position.vue';
+import { computed } from 'vue';
+import dayjs from 'dayjs';
+
+const start = ref("")
+const end = ref("")
+start.value = dayjs()
+end.value = start.value.add(1,"day")
+let totalDays = dayjs()
+totalDays = computed( () => end.value.diff(start.value,"day") )
+
 </script>
 
 <style scoped>
